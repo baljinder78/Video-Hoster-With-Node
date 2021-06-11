@@ -49,7 +49,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  const user = await User.find();
+  const user = await User.find({},{password:0});
   res.json(user);
 });
 

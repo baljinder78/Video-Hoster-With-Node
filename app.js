@@ -4,6 +4,7 @@ const CORS=require("cors")
 const port = 3000;
 const mongoose = require('mongoose');
 const userrouter=require("./Controller/usercontroller")
+const postrouter=require("./Controller/Postcontroller")
 const Bodyparser = require('body-parser');
 
 app.use(Bodyparser.json());
@@ -16,22 +17,8 @@ app.get('/', (req, res) => {
 
 app.use("/user",userrouter)
 
+app.use("/post",postrouter)
 
-
-// app.post('/post', (req, res) => {
-//   const post = new Post({
-//     title: req.body.title,
-//     desc: req.body.desc,
-//   });
-//   post
-//     .save()
-//     .then((data) => {
-//       res.json(data);
-//     })
-//     .catch((err) => {
-//       res.json({ message: err });
-//     });
-// });
 
 
 

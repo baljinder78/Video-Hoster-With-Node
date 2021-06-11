@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-</head>
-<body>
-    <h1>All post</h1>
-    <div id="result">
-
+    <link href="./CSS/Main.css" rel="stylesheet">
+  </head>
+  <body>
+    <button id="logout" onclick="logoutsession()">
+        Logout
+    </button>
+    
+    <button id="login" onclick="loginpage()">
+        Login
+    </button>
+    <button id="signup" onclick="signuppage()">
+        Register
+    </button>
+    <h1 id="checker">LOGIN/REGISTER TO SEE ALL POSTS</h1>
+    <div id="allposts">
+     <button id="upload" onclick="uploadpage()">Create post</button>
+        <h1>All post</h1>
+      <div id="result"></div>
     </div>
-</body>
+
+
+    <script src="./JS/Main.js"></script>
+  </body>
 </html>
