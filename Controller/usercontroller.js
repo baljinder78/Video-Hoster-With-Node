@@ -1,46 +1,56 @@
 const express = require('express');
 
-const router=express.Router();
+const router = express.Router();
 const app = express();
-const User=require("../models/User"); 
+const User = require('../models/User');
 const Bodyparser = require('body-parser');
 
-app.use(Bodyparser.json());
+ app.use(Bodyparser.json());
 
+var urlencodedParser = Bodyparser.text();
 
-router.post("/register",(req, res) => {
+router.post('/register',urlencodedParser, async (req, res) => {
+  const data=JSON.parse(req.body)
+  console.log( (req.body));
   const user = new User({
-    userId: req.body.userId,
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
+    userId: data.userId,
+    username: data.username,
+    email: data.email,
+    password: data.password,
   });
-  user.save()
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((err) => {
-        res.json({ message: err });
-       });
-})
+  try {
+    const usersaved = await user.save();
+    res.send(usersaved._id);
+  } catch (err) {
+    res.send("False");
+  }
+});
 
-router.post("/login",async (req,res)=>
-{
-  // const user=new User(
-  //   {
-  //     userId:req.body.userId,
-  //     password:req.body.password
-  //   }
-  // )
+router.post('/login', urlencodedParser, async (req, res) => {
+  const data=JSON.parse(req.body);
+  try{
+  const usertoreturn = await User.findOne(
+    { userId: data.userId },
+    { userId: 1, password: 1 }
+  );
+  if(usertoreturn.password!=data.password)
+  {
+    res.send("Fasle");
+  }
+  else{
 
-  const usertoreturn = await User.findOne({ userId: req.body.userId },{userId:1,password:1});
-  console.log(usertoreturn);
-  res.json(usertoreturn);
-})
+  res.send(usertoreturn._id);
+  }
+  }
+  catch(err){
+    res.send("False");
+  }
+  
+});
 
-router.get("/",async (req,res)=>{
-  const user= await User.find()
+router.get('/', async (req, res) => {
+  const user = await User.find();
   res.json(user);
-})
+});
 
-module.exports=router;
+module.exports = router;
